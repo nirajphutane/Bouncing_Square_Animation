@@ -12,7 +12,7 @@ class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStat
   int milliseconds = 2500;
   BorderRadiusGeometry borderRadius;
   int corner = 0;
-  bool lock = true, moveUp = true;
+  bool lock = true, moveUp = false;
   double shadowWidth = 150, squareWidth = 100;
 
   @override
@@ -37,7 +37,7 @@ class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStat
           AnimatedPositioned(
             duration: Duration(milliseconds: 100),
             right: 50,
-            bottom: moveUp? 40: 20,
+            bottom: moveUp? 40: 10,
             child: Transform.rotate(
               angle: (3.14/180) * 35,
               child: RotationTransition(
@@ -109,12 +109,12 @@ class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStat
           setState(() {
             squareWidth = 110;
             shadowWidth = 120;
-            moveUp = true;
+            moveUp = false;
             borderRadius = BorderRadius.only(
-              bottomRight: angle > 0.98 && angle <0.99? Radius.circular(30): Radius.zero,
-              topRight: angle > 0.25 && angle <0.26? Radius.circular(30): Radius.zero,
-              topLeft: angle > 0.50 && angle <0.51? Radius.circular(30): Radius.zero,
-              bottomLeft: angle > 0.75 && angle <0.76? Radius.circular(30): Radius.zero,
+              bottomRight: angle > 0.95 && angle <0.99? Radius.circular(50): Radius.circular(5),
+              topRight: angle > 0.20 && angle <0.26? Radius.circular(50): Radius.circular(5),
+              topLeft: angle > 0.45 && angle <0.51? Radius.circular(50): Radius.circular(5),
+              bottomLeft: angle > 0.70 && angle <0.76? Radius.circular(50): Radius.circular(5),
             );
           });
         }
@@ -123,7 +123,7 @@ class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStat
             squareWidth = 100;
             shadowWidth = 150;
             borderRadius = BorderRadius.circular(0);
-            moveUp = false;
+            moveUp = true;
           });
         });
       }
