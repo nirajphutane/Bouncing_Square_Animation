@@ -40,7 +40,7 @@ class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStat
           AnimatedPositioned(
             duration: Duration(milliseconds: 100),
             right: 50,
-            bottom: moveUp? 40: 8,
+            bottom: moveUp? 40: -2,
             child: Transform.rotate(
               angle: (3.14/180) * 45,
               child: RotationTransition(
@@ -68,7 +68,7 @@ class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStat
                 0, 1, 0, 0,
                 0, 0, 1, 0.01,
                 0, 0, 0, 1,
-              )..rotateX(1),
+              )..rotateX(0.5),
               child: ClipOval(
                 child: AnimatedContainer(
                   height: shadowWidth,
@@ -104,13 +104,13 @@ class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStat
     tween.addListener(() {
       double angle = double.parse(tween.value.toStringAsFixed(4));
       if(angle >= 0.20 && angle <= 0.22){
-        verticalBounce(BorderRadius.only(topRight: Radius.circular(50)));
+        verticalBounce(BorderRadius.only(topRight: Radius.circular(75)));
       } else if(angle >= 0.45 && angle <= 0.47){
-        verticalBounce(BorderRadius.only(topLeft: Radius.circular(50)));
+        verticalBounce(BorderRadius.only(topLeft: Radius.circular(75)));
       } else if(angle >= 0.70 && angle <= 0.72){
-        verticalBounce(BorderRadius.only(bottomLeft: Radius.circular(50)));
+        verticalBounce(BorderRadius.only(bottomLeft: Radius.circular(75)));
       } else if(angle >= 0.97 && angle <= 0.99){
-        verticalBounce(BorderRadius.only(bottomRight: Radius.circular(50)));
+        verticalBounce(BorderRadius.only(bottomRight: Radius.circular(75)));
       }
     });
   }
@@ -121,7 +121,7 @@ class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStat
       shadowWidth = 120;
       moveUp = false;
     });
-    Future.delayed(Duration(milliseconds: 10)).then((value) {
+    Future.delayed(Duration(milliseconds: 15)).then((value) {
       setState(() {
         borderRadius = borderRadiusGeometry;
       });
