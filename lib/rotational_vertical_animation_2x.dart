@@ -8,13 +8,14 @@ class RVAnimation extends StatefulWidget {
 
 class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStateMixin {
 
+  AnimationController animationController;
   Animation<double> tween;
-  int milliseconds = 2000;
   BorderRadiusGeometry borderRadius = BorderRadius.only(
     bottomRight: Radius.circular(5),
   );
   bool lock = false, moveUp = true;
   double shadowWidth = 150, squareWidth = 100;
+  final int milliseconds = 2000;
 
   @override
   void initState() {
@@ -24,6 +25,7 @@ class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStat
 
   @override
   void dispose() {
+    animationController.dispose();
     super.dispose();
   }
 
@@ -38,7 +40,7 @@ class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStat
           AnimatedPositioned(
             duration: Duration(milliseconds: 100),
             right: 50,
-            bottom: moveUp? 40: 10,
+            bottom: moveUp? 40: 8,
             child: Transform.rotate(
               angle: (3.14/180) * 45,
               child: RotationTransition(
@@ -87,7 +89,7 @@ class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStat
   }
 
   void rotate() {
-    AnimationController animationController = AnimationController(
+    animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: milliseconds),
     );
@@ -99,103 +101,38 @@ class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStat
     });
 
     tween = Tween(begin: 0.0, end: 1.0).animate(animationController);
-
     tween.addListener(() {
       double angle = double.parse(tween.value.toStringAsFixed(4));
-
       if(angle >= 0.20 && angle <= 0.22){
-        if(mounted){
-          setState(() {
-            squareWidth = 110;
-            shadowWidth = 120;
-            moveUp = false;
-          });
-          Future.delayed(Duration(milliseconds: 10)).then((value) {
-            setState(() {
-              borderRadius = BorderRadius.only(
-                topRight: Radius.circular(50)
-              );
-            });
-          });
-        }
-        Future.delayed(Duration(milliseconds: 100)).then((value) {
-          setState(() {
-            squareWidth = 100;
-            shadowWidth = 150;
-            borderRadius = BorderRadius.circular(5);
-            moveUp = true;
-          });
-        });
+        verticalBounce(BorderRadius.only(topRight: Radius.circular(50)));
       } else if(angle >= 0.45 && angle <= 0.47){
-        if(mounted){
-          setState(() {
-            squareWidth = 110;
-            shadowWidth = 120;
-            moveUp = false;
-          });
-          Future.delayed(Duration(milliseconds: 10)).then((value) {
-            setState(() {
-              borderRadius = BorderRadius.only(
-                topLeft: Radius.circular(50)
-              );
-            });
-          });
-        }
-        Future.delayed(Duration(milliseconds: 100)).then((value) {
-          setState(() {
-            squareWidth = 100;
-            shadowWidth = 150;
-            borderRadius = BorderRadius.circular(5);
-            moveUp = true;
-          });
-        });
+        verticalBounce(BorderRadius.only(topLeft: Radius.circular(50)));
       } else if(angle >= 0.70 && angle <= 0.72){
-        if(mounted){
-          setState(() {
-            squareWidth = 110;
-            shadowWidth = 120;
-            moveUp = false;
-          });
-          Future.delayed(Duration(milliseconds: 10)).then((value) {
-            setState(() {
-              borderRadius = BorderRadius.only(
-                bottomLeft: Radius.circular(50)
-              );
-            });
-          });
-        }
-        Future.delayed(Duration(milliseconds: 100)).then((value) {
-          setState(() {
-            squareWidth = 100;
-            shadowWidth = 150;
-            borderRadius = BorderRadius.circular(5);
-            moveUp = true;
-          });
-        });
+        verticalBounce(BorderRadius.only(bottomLeft: Radius.circular(50)));
       } else if(angle >= 0.97 && angle <= 0.99){
-        if(mounted){
-          setState(() {
-            squareWidth = 110;
-            shadowWidth = 120;
-            moveUp = false;
-          });
-          Future.delayed(Duration(milliseconds: 10)).then((value) {
-            setState(() {
-              borderRadius = BorderRadius.only(
-                  bottomRight: Radius.circular(50)
-              );
-            });
-          });
-        }
-        Future.delayed(Duration(milliseconds: 100)).then((value) {
-          setState(() {
-            squareWidth = 100;
-            shadowWidth = 150;
-            borderRadius = BorderRadius.circular(5);
-            moveUp = true;
-          });
-        });
+        verticalBounce(BorderRadius.only(bottomRight: Radius.circular(50)));
       }
+    });
+  }
+
+  void verticalBounce(BorderRadiusGeometry borderRadiusGeometry){
+    setState(() {
+      squareWidth = 110;
+      shadowWidth = 120;
+      moveUp = false;
+    });
+    Future.delayed(Duration(milliseconds: 10)).then((value) {
+      setState(() {
+        borderRadius = borderRadiusGeometry;
+      });
+    });
+    Future.delayed(Duration(milliseconds: 100)).then((value) {
+      setState(() {
+        squareWidth = 100;
+        shadowWidth = 150;
+        borderRadius = BorderRadius.circular(5);
+        moveUp = true;
+      });
     });
   }
 }
