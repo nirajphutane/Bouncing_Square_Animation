@@ -9,7 +9,7 @@ class RVAnimation extends StatefulWidget {
 class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStateMixin {
 
   Animation<double> tween;
-  int milliseconds = 2500;
+  int milliseconds = 2000;
   BorderRadiusGeometry borderRadius = BorderRadius.only(
     bottomRight: Radius.circular(5),
   );
@@ -99,27 +99,95 @@ class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStat
     });
 
     tween = Tween(begin: 0.0, end: 1.0).animate(animationController);
+
     tween.addListener(() {
       double angle = double.parse(tween.value.toStringAsFixed(4));
-      if((angle > 0.25 && angle < 0.29 && !lock)||
-        (angle > 0.50 && angle < 0.54 && !lock)||
-        (angle > 0.75 && angle < 0.79 && !lock)||
-        (angle > 0.95 && angle < 0.99 && !lock)){
-        lock = true;
+
+      if(angle >= 0.20 && angle <= 0.22){
         if(mounted){
           setState(() {
             squareWidth = 110;
             shadowWidth = 120;
             moveUp = false;
-            borderRadius = BorderRadius.only(
-              topRight: angle > 0.27 && angle < 0.29? Radius.circular(50): Radius.circular(5),
-              topLeft: angle > 0.52 && angle < 0.54? Radius.circular(50): Radius.circular(5),
-              bottomLeft: angle > 0.77 && angle < 0.79? Radius.circular(50): Radius.circular(5),
-              bottomRight: angle > 0.97 && angle < 0.99? Radius.circular(50): Radius.circular(5),
-            );
+          });
+          Future.delayed(Duration(milliseconds: 10)).then((value) {
+            setState(() {
+              borderRadius = BorderRadius.only(
+                topRight: Radius.circular(50)
+              );
+            });
           });
         }
-        Future.delayed(Duration(milliseconds: 300)).then((value) {
+        Future.delayed(Duration(milliseconds: 100)).then((value) {
+          setState(() {
+            squareWidth = 100;
+            shadowWidth = 150;
+            borderRadius = BorderRadius.circular(5);
+            moveUp = true;
+          });
+        });
+      } else if(angle >= 0.45 && angle <= 0.47){
+        if(mounted){
+          setState(() {
+            squareWidth = 110;
+            shadowWidth = 120;
+            moveUp = false;
+          });
+          Future.delayed(Duration(milliseconds: 10)).then((value) {
+            setState(() {
+              borderRadius = BorderRadius.only(
+                topLeft: Radius.circular(50)
+              );
+            });
+          });
+        }
+        Future.delayed(Duration(milliseconds: 100)).then((value) {
+          setState(() {
+            squareWidth = 100;
+            shadowWidth = 150;
+            borderRadius = BorderRadius.circular(5);
+            moveUp = true;
+          });
+        });
+      } else if(angle >= 0.70 && angle <= 0.72){
+        if(mounted){
+          setState(() {
+            squareWidth = 110;
+            shadowWidth = 120;
+            moveUp = false;
+          });
+          Future.delayed(Duration(milliseconds: 10)).then((value) {
+            setState(() {
+              borderRadius = BorderRadius.only(
+                bottomLeft: Radius.circular(50)
+              );
+            });
+          });
+        }
+        Future.delayed(Duration(milliseconds: 100)).then((value) {
+          setState(() {
+            squareWidth = 100;
+            shadowWidth = 150;
+            borderRadius = BorderRadius.circular(5);
+            moveUp = true;
+          });
+        });
+      } else if(angle >= 0.97 && angle <= 0.99){
+        if(mounted){
+          setState(() {
+            squareWidth = 110;
+            shadowWidth = 120;
+            moveUp = false;
+          });
+          Future.delayed(Duration(milliseconds: 10)).then((value) {
+            setState(() {
+              borderRadius = BorderRadius.only(
+                  bottomRight: Radius.circular(50)
+              );
+            });
+          });
+        }
+        Future.delayed(Duration(milliseconds: 100)).then((value) {
           setState(() {
             squareWidth = 100;
             shadowWidth = 150;
@@ -128,7 +196,6 @@ class _RVAnimationState extends State<RVAnimation> with SingleTickerProviderStat
           });
         });
       }
-      lock = false;
     });
   }
 }
