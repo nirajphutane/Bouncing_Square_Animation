@@ -1,4 +1,4 @@
-# RV_Animation
+# Bouncing_Square_Animation
 
 This is a example animation which copy I tried to make in flutter given below:
 
